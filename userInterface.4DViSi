@@ -1,0 +1,127 @@
+﻿Version     0.0
+Platform    uLCD-32PTU-L
+PlatRes     240x320
+Depends
+end
+Options
+    Visualizer
+    Speed                        9600
+    Checksum                     No
+    ResponseSize                 2
+    Multidrop                    No
+    Destination                  0
+    MainForm                     0
+    SndBuf                       0
+    ButtonDisable                No
+    SignedDigits                 No
+end
+Form
+    Name                         FormMain
+    Alias                        FormMain
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Strings
+    Name                         SohoStd
+    Alias                        SohoStd
+    Alignment                    Left
+    BGcolor                      BLACK
+    Height                       0
+    FGcolor                      WHITE
+    Font.Bold                    No
+    Font.CharSet                 ANSI
+    Font.Italic                  No
+    Font.Name                    'Soho Std'
+    Font.Opaque                  No
+    Font.Size                    22
+    Font.Strikethrough           No
+    Font.Underline               No
+    Left                         0
+    Strings                      ''
+    StringsStyle                 Message
+    Top                          0
+    Width                        0
+    OnChanged                    ''
+end
+Image
+    Name                         OrangeBlackLogo
+    Alias                        OrangeBlackLogo
+    Height                       75
+    Image                        orangeBlackLogo.png
+    Left                         170
+    Source.Height                519
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 1460
+    Top                          0
+    Width                        150
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Form
+    Name                         FormLogin
+    Alias                        FormLogin
+    Bgtype                       Color
+    Color                        BLACK
+    Image                        (None)
+    Source.Height                0
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 0
+    OnActivate                   ''
+    OnCreate                     ''
+    OnRepeat                     ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Image
+    Name                         MainLogo
+    Alias                        MainLogo
+    Height                       100
+    Image                        orangeBlackLogo.png
+    Left                         60
+    Source.Height                519
+    Source.Left                  0
+    Source.Top                   0
+    Source.Width                 1460
+    Top                          22
+    Width                        200
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Strings
+    Name                         WelcomeMessage
+    Alias                        WelcomeMessage
+    Alignment                    Center
+    BGcolor                      BLACK
+    Height                       110
+    FGcolor                      WHITE
+    Font.Bold                    No
+    Font.CharSet                 ANSI
+    Font.Italic                  No
+    Font.Name                    'Soho Std'
+    Font.Opaque                  Yes
+    Font.Size                    22
+    Font.Strikethrough           No
+    Font.Underline               No
+    Left                         0
+    Strings                      'Welcome to the Inventory Management System!\n\nPlease scan your ID to continue.\n'
+    StringsStyle                 Book
+    Top                          130
+    Width                        320
+    OnChanged                    ''
+end

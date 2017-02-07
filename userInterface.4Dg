@@ -1,0 +1,87 @@
+#platform "uLCD-32PTU"
+
+// Program Skeleton 1.2 generated 2/6/2017 8:03:26 PM
+
+#inherit "4DGL_16bitColours.fnc"
+#inherit "VisualConst.inc"
+#inherit "userInterfaceConst.inc"
+#inherit "PrintDisk.inc"
+
+func main()
+    var hStrings;   // Handle to access uSD strings, uncomment if required
+    var hFont1, hFont2;    // Handle to access uSD fonts, uncomment if required and change n to font number
+
+    var reply;
+
+    gfx_Set(SCREEN_MODE, LANDSCAPE);
+
+    touch_Set(TOUCH_ENABLE);
+
+    putstr("Mounting SD card...\n");
+    if (!(file_Mount()))
+        while(!(file_Mount()))
+            putstr("No SD card detected...");
+            pause(200);
+            gfx_Cls();
+            pause(200);
+        wend
+    endif
+    gfx_Cls();
+//  gfx_TransparentColour(0xFFFF);
+//  gfx_Transparency(ON);
+
+    hStrings := file_Open("USERIN~1.txf", 'r') ; // Open handle to access uSD strings, uncomment if required
+    hFont1 := file_LoadImageControl("USERIN~1.da1", "USERIN~1.gc1", 1); // Open handle to access uSD fonts, uncomment if required and change n to font number dropping a and c if > 9
+    hFont2 := file_LoadImageControl("USERIN~1.da2", "USERIN~1.gc2", 1); // Open handle to access uSD fonts, uncomment if required and change n to font number dropping a and c if > 9
+    hndl := file_LoadImageControl("USERIN~1.dat", "USERIN~1.gci", 1);
+
+    FormLogin(hStrings, hFont2);
+    repeat
+        FormMain(hFont1);
+    forever
+endfunc
+
+func FormMain(var hFont1)
+
+    var touchState, buttonState, returnValue;
+    gfx_Cls();
+
+    // OrangeBlackLogo 1.0 generated 2/7/2017 1:15:21 AM
+    img_Show(hndl,iOrangeBlackLogo);
+
+    repeat
+    forever
+
+endfunc;
+
+func FormLogin(var hStrings, var hFont2)
+
+    var touchState;
+    gfx_Cls();
+
+    // MainLogo 1.0 generated 2/7/2017 12:21:14 AM
+    img_Show(hndl,iMainLogo) ;
+
+    // WelcomeMessage 1.1 generated 2/7/2017 12:29:48 AM
+    txt_FontID(hFont2) ; // Font index correct at time of code generation
+    txt_FGcolour(WHITE) ;
+    txt_BGcolour(BLACK) ;
+    gfx_MoveTo(0 , 130) ;
+    PrintDisk(hStrings, WelcomeMessageStartH, WelcomeMessageStartL, WelcomeMessageSize, 0) ; // where i is Page 0 - WelcomeMessageCount-1
+
+    repeat
+        touchState := touch_Get(TOUCH_STATUS);
+
+        if(touchState == TOUCH_RELEASED)
+            goto exit;
+        endif
+    forever
+
+exit:
+
+    pause(200);
+
+    return;
+
+endfunc
+
