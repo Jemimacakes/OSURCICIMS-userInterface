@@ -9,7 +9,7 @@ Options
     Checksum                     No
     ResponseSize                 2
     Multidrop                    No
-    Destination                  0
+    Destination                  1
     MainForm                     0
     SndBuf                       0
     ButtonDisable                No
@@ -57,15 +57,133 @@ end
 Image
     Name                         OrangeBlackLogo
     Alias                        OrangeBlackLogo
-    Height                       75
+    Height                       80
     Image                        orangeBlackLogo.png
-    Left                         170
+    Left                         5
     Source.Height                519
     Source.Left                  0
     Source.Top                   0
     Source.Width                 1460
-    Top                          0
-    Width                        150
+    Top                          5
+    Width                        160
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+WinButton
+    Name                         AdminOptionsButton
+    Alias                        AdminOptionsButton
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      Yes
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   0x0045C3
+    Caption                      'Administrator Options'
+    Color                        0x0045C3
+    Font.Color                   BLACK
+    Font.Effects                 []
+    Font.Name                    'Soho Std'
+    Font.Size                    12
+    Font.Style                   []
+    Height                       40
+    Left                         195
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          45
+    Width                        120
+    OnChanged                    ''
+    OnTouchMoving                ''
+    OnTouchPressed               ''
+    OnTouchReleased              ''
+end
+Strings
+    Name                         MessageSkel
+    Alias                        MessageSkel
+    Alignment                    Center
+    BGcolor                      BLACK
+    Height                       132
+    FGcolor                      WHITE
+    Font.Bold                    No
+    Font.CharSet                 ANSI
+    Font.Italic                  No
+    Font.Name                    'Soho Std'
+    Font.Opaque                  Yes
+    Font.Size                    22
+    Font.Strikethrough           No
+    Font.Underline               No
+    Left                         0
+    Strings                      'Hello\n\n\nYou have\n\ntools checked out.\n'
+    StringsStyle                 Book
+    Top                          103
+    Width                        320
+    OnChanged                    ''
+end
+WinButton
+    Name                         LogoutButton
+    Alias                        LogoutButton
+    Appearance.Alignment         Center
+    Appearance.Layout            Left
+    Appearance.PictureAlignment  Right
+    Appearance.SimpleLayout      Yes
+    Appearance.Spacing           3
+    AutoSizeToPicture            No
+    Bevel                        Yes
+    BevelColor                   clWhite
+    Caption                      Logout
+    Color                        0x0045C3
+    Font.Color                   clWindowText
+    Font.Effects                 []
+    Font.Name                    'Soho Std'
+    Font.Size                    12
+    Font.Style                   []
+    Height                       35
+    Left                         245
+    Matrix                       -1
+    Momentary                    Yes
+    Picture                      (None)
+    StatusWhenOff.BGcolor        RED
+    StatusWhenOff.Caption        ''
+    StatusWhenOff.Glow           Yes
+    StatusWhenOff.Color          WHITE
+    StatusWhenOff.Effects        []
+    StatusWhenOff.Name           Tahoma
+    StatusWhenOff.Size           8
+    StatusWhenOff.Style          []
+    StatusWhenOff.Visible        Yes
+    StatusWhenOn.BGcolor         RED
+    StatusWhenOn.Caption         ''
+    StatusWhenOn.Glow            Yes
+    StatusWhenOn.Color           WHITE
+    StatusWhenOn.Effects         []
+    StatusWhenOn.Name            Tahoma
+    StatusWhenOn.Size            8
+    StatusWhenOn.Style           []
+    StatusWhenOn.Visible         Yes
+    Top                          5
+    Width                        70
+    OnChanged                    ''
     OnTouchMoving                ''
     OnTouchPressed               ''
     OnTouchReleased              ''

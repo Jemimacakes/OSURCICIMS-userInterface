@@ -8,10 +8,22 @@
 #inherit "PrintDisk.inc"
 
 func main()
-    var hStrings;   // Handle to access uSD strings, uncomment if required
-    var hFont1, hFont2;    // Handle to access uSD fonts, uncomment if required and change n to font number
+    var hStrings;    // Handle to access uSD strings
+    var SohoStd22Pt; // Handle to access uSD fonts
 
     var reply;
+
+    var userName[15];
+    var userNameWidth;
+    var numTools[15];
+    var numToolsWidth;
+    var isAdmin;
+
+    to(userName); print("Steven");
+    to(numTools); print("102");
+    userNameWidth := 6;
+    numToolsWidth := 3;
+    isAdmin := 0;
 
     gfx_Set(SCREEN_MODE, LANDSCAPE);
 
@@ -30,49 +42,140 @@ func main()
 //  gfx_TransparentColour(0xFFFF);
 //  gfx_Transparency(ON);
 
-    hStrings := file_Open("USERIN~1.txf", 'r') ; // Open handle to access uSD strings, uncomment if required
-    hFont1 := file_LoadImageControl("USERIN~1.da1", "USERIN~1.gc1", 1); // Open handle to access uSD fonts, uncomment if required and change n to font number dropping a and c if > 9
-    hFont2 := file_LoadImageControl("USERIN~1.da2", "USERIN~1.gc2", 1); // Open handle to access uSD fonts, uncomment if required and change n to font number dropping a and c if > 9
+    hStrings := file_Open("USERIN~1.txf", 'r') ; // Open handle to access uSD strings
+    SohoStd22Pt := file_LoadImageControl("USERIN~1.da1", "USERIN~1.gc1", 1); // Open handle to access uSD fonts - 22 Point Soho Std 11x22 Numbers
     hndl := file_LoadImageControl("USERIN~1.dat", "USERIN~1.gci", 1);
 
-    FormLogin(hStrings, hFont2);
+restart:
+    reply := FormLogin(hStrings, SohoStd22Pt);
     repeat
-        FormMain(hFont1);
+        if(reply == iLogoutButton)
+            goto restart;
+        else if(reply == iAdminOptionsButton)
+            reply := FormAdminOptions();
+        else
+            reply := FormMain(hStrings, SohoStd22Pt, userName, userNameWidth, numTools, numToolsWidth, isAdmin);
+        endif
     forever
 endfunc
 
-func FormMain(var hFont1)
+func FormMain(var hStrings, var SohoStd22Pt, var userName, var userNameWidth, var numTools, var numToolsWidth var isAdmin)
 
-    var touchState, buttonState, returnValue;
+    var touchState, buttonState;
+    var returnValue;
+    var userNameX, numToolsX;
     gfx_Cls();
 
-    // OrangeBlackLogo 1.0 generated 2/7/2017 1:15:21 AM
+    userNameX := 160 - ((userNameWidth * 10) / 2);
+    numToolsX := 160 - ((numToolsWidth * 11) / 2);
+
     img_Show(hndl,iOrangeBlackLogo);
 
+    img_ClearAttributes(hndl, iLogoutButton, I_TOUCH_DISABLE); // set to enable touch
+    img_Show(hndl, iLogoutButton);  // show button
+
+    if(isAdmin)
+        img_ClearAttributes(hndl, iAdminOptionsButton, I_TOUCH_DISABLE); // set to enable touch
+        img_Show(hndl, iAdminOptionsButton);  // show button
+    endif
+
+    txt_FontID(SohoStd22Pt);
+    txt_FGcolour(WHITE);
+    txt_BGcolour(BLACK);
+    gfx_MoveTo(0, 103);
+    PrintDisk(hStrings, MessageSkelStartH, MessageSkelStartL, MessageSkelSize, 0);
+
+    gfx_MoveTo(userNameX, 125);
+    to(TEXT); print([STR] userName);
+    gfx_MoveTo(numToolsX, 191);
+    to(TEXT); print([STR] numTools);
+
     repeat
+        touchState := touch_Get(TOUCH_STATUS);
+        buttonState := img_Touched(hndl, -1);
+
+        if(touchState == TOUCH_PRESSED)
+            if(buttonState == iLogoutButton)
+                img_SetWord(hndl, iLogoutButton, IMAGE_INDEX, 1);
+                img_Show(hndl, iLogoutButton);
+            endif
+
+            if(isAdmin)
+                if(buttonState == iAdminOptionsButton)
+                    img_SetWord(hndl, iAdminOptionsButton, IMAGE_INDEX, 1);
+                    img_Show(hndl, iAdminOptionsButton);
+                endif
+            endif
+        endif
+
+        if(touchState == TOUCH_RELEASED)
+            if(buttonState == iLogoutButton)
+                img_SetWord(hndl, iLogoutButton, IMAGE_INDEX, 0);
+                img_Show(hndl, iLogoutButton);
+                returnValue := iLogoutButton;
+                goto exit;
+            endif
+
+            if(isAdmin)
+                if(buttonState == iAdminOptionsButton)
+                    img_SetWord(hndl, iAdminOptionsButton, IMAGE_INDEX, 0);
+                    img_Show(hndl, iAdminOptionsButton);
+                    returnValue := iAdminOptionsButton;
+                    goto exit;
+                endif
+            endif
+        endif
+
+        if(touchState == TOUCH_MOVING)
+            if(buttonState == iLogoutButton)
+                img_SetWord(hndl, iLogoutButton, IMAGE_INDEX, 1);
+                img_Show(hndl, iLogoutButton);
+            else
+                img_SetWord(hndl, iLogoutButton, IMAGE_INDEX, 0);
+                img_Show(hndl, iLogoutButton);
+            endif
+
+            if(isAdmin)
+                if(buttonState == iAdminOptionsButton)
+                    img_SetWord(hndl, iAdminOptionsButton, IMAGE_INDEX, 1);
+                    img_Show(hndl, iAdminOptionsButton);
+                else
+                    img_SetWord(hndl, iAdminOptionsButton, IMAGE_INDEX, 0);
+                    img_Show(hndl, iAdminOptionsButton);
+                endif
+            endif
+        endif
     forever
+
+exit:
+
+    pause(200);
+
+    img_SetAttributes(hndl, iLogoutButton, I_TOUCH_DISABLE);
+    img_SetAttributes(hndl, iAdminOptionsButton, I_TOUCH_DISABLE);
+
+    return returnValue;
 
 endfunc;
 
-func FormLogin(var hStrings, var hFont2)
+func FormLogin(var hStrings, var SohoStd22Pt)
 
-    var touchState;
+    var touchState, returnValue;
     gfx_Cls();
 
-    // MainLogo 1.0 generated 2/7/2017 12:21:14 AM
-    img_Show(hndl,iMainLogo) ;
+    img_Show(hndl,iMainLogo);
 
-    // WelcomeMessage 1.1 generated 2/7/2017 12:29:48 AM
-    txt_FontID(hFont2) ; // Font index correct at time of code generation
-    txt_FGcolour(WHITE) ;
-    txt_BGcolour(BLACK) ;
-    gfx_MoveTo(0 , 130) ;
-    PrintDisk(hStrings, WelcomeMessageStartH, WelcomeMessageStartL, WelcomeMessageSize, 0) ; // where i is Page 0 - WelcomeMessageCount-1
+    txt_FontID(SohoStd22Pt); // Font index correct at time of code generation
+    txt_FGcolour(WHITE);
+    txt_BGcolour(BLACK);
+    gfx_MoveTo(0 , 130);
+    PrintDisk(hStrings, WelcomeMessageStartH, WelcomeMessageStartL, WelcomeMessageSize, 0);
 
     repeat
         touchState := touch_Get(TOUCH_STATUS);
 
         if(touchState == TOUCH_RELEASED)
+            returnValue := 0;
             goto exit;
         endif
     forever
@@ -81,7 +184,15 @@ exit:
 
     pause(200);
 
-    return;
+    return returnValue;
 
+endfunc
+
+func FormAdminOptions()
+
+    gfx_Cls();
+
+    repeat
+    forever
 endfunc
 
